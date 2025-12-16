@@ -319,14 +319,17 @@ elif menu == "Transactions":
             )
 
             if st.form_submit_button("Update Transaction"):
-                df.loc[row_to_edit] = [
-                    edit_date,
-                    edit_category,
-                    edit_description,
-                    edit_amount
-                ]
+                df.at[row_to_edit, "date"] = edit_date
+                df.at[row_to_edit, "category"] = edit_category
+                df.at[row_to_edit, "description"] = edit_description
+                df.at[row_to_edit, "amount"] = edit_amount
+
+                # Recompute month after edit
+                df["month"] = pd.to_datetime(df["date"]).dt.strftime("%Y-%m")
+
 
                 df.to_csv("transactions.csv", index=False)
+
 
                 st.success("Transaction updated successfully.")
                 st.rerun()
