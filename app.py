@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import altair as alt
 
 st.markdown(
     """
@@ -104,13 +105,33 @@ if menu == "Dashboard":
     st.write("Your financial summary based on recorded transactions.")
     st.subheader("Spending by Category")
     expense_df = filtered_df[filtered_df["amount"] < 0]
-    category_summary = (
-        expense_df.groupby("category")["amount"]
-        .sum()
-        .abs()
-    )
 
-    st.bar_chart(category_summary)
+    if not expense_df.empty:
+        chart_data = (
+            expense_df.groupby("category", as_index=False)["amount"]
+            .sum()
+        )
+        chart_data["amount"] = chart_data["amount"].abs()
+
+        chart = (
+            alt.Chart(chart_data)
+            .mark_bar(
+                color="#4f46e5",
+                cornerRadiusTopLeft=6,
+                cornerRadiusTopRight=6
+            )
+            .encode(
+                x=alt.X("category:N", title=""),
+                y=alt.Y("amount:Q", title="Amount Spent"),
+                tooltip=["category", "amount"]
+            )
+            .properties(height=320)
+        )
+
+        st.altair_chart(chart, use_container_width=True)
+    else:
+        st.info("No expenses for this month")
+
 
 
 
