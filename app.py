@@ -14,7 +14,12 @@ if not os.path.exists("transactions.csv"):
     df = pd.DataFrame(columns=["date", "category", "description", "amount"])
     df.to_csv("transactions.csv", index=False)
 else:
-    df = pd.read_csv("transactions.csv")
+    df = pd.read_csv(
+    "transactions.csv",
+    on_bad_lines="skip",
+    engine="python"
+)
+
 
 # ---------- DATE PROCESSING ----------
 if not df.empty:
