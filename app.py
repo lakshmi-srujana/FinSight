@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 st.set_page_config(
     page_title="FinSight",
@@ -31,6 +32,13 @@ if menu == "Dashboard":
     col3.metric("💰 Balance", f"₹{balance}")
 
     st.divider()
+        # ---------- NUMPY INSIGHT ----------
+    expense_values = df[df["amount"] < 0]["amount"].values
+
+    if len(expense_values) > 0:
+        max_expense = np.min(expense_values)
+        st.info(f"📉 Highest single expense: ₹{abs(max_expense)}")
+
     st.subheader("Overview")
     st.write("Your financial summary based on recorded transactions.")
     st.subheader("Spending by Category")
