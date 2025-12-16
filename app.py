@@ -35,6 +35,17 @@ st.markdown(
         color: #0f172a;
         font-weight: 600;
     }
+    
+    /* Sidebar text */
+    section[data-testid="stSidebar"] * {
+        color: #0f172a !important;
+    }
+
+    /* Sidebar title */
+    section[data-testid="stSidebar"] h1 {
+        color: #0f172a !important;
+        font-weight: 700;
+    }
 
     /* Paragraph text */
     p {
