@@ -104,7 +104,9 @@ else:
 # --------------------------------------------------
 # SIDEBAR
 # --------------------------------------------------
-st.sidebar.title("FinSight")
+st.sidebar.image("logo.png", use_container_width=True)
+st.sidebar.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+
 
 menu = st.sidebar.radio("Navigate", ["Dashboard", "Transactions"])
 
