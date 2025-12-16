@@ -75,6 +75,44 @@ st.markdown(
         color: #cbd5f5;
         font-size: 0.95rem;
     }
+
+    /* Active radio button (Dashboard / Transactions) */
+    section[data-testid="stSidebar"] div[role="radiogroup"] label[data-selected="true"] {
+        background-color: #1e1b4b !important;
+        border-left: 4px solid #6366f1;
+        border-radius: 6px;
+    }
+
+    /* Hover effect */
+    section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+        background-color: #111827;
+    }
+
+    div[data-testid="stAlert"] {
+    background-color: #1e1b4b !important;
+    border: 1px solid #6366f1 !important;
+    color: #e0e7ff !important;
+    }
+
+    button[kind="primary"] {
+    background-color: #6366f1 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    }
+
+    button[kind="primary"]:hover {
+        background-color: #4f46e5 !important;
+    }
+
+    label {
+    font-size: 0.9rem;
+    color: #c7d2fe !important;
+    }
+
+    small {
+        color: #94a3b8;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -139,7 +177,7 @@ if menu == "Dashboard":
             padding:24px;
             border-radius:14px;
             border:1px solid #1e293b;
-            box-shadow:0 6px 16px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12);
         ">
             <p style="margin:0; color:#cbd5f5;">Income</p>
             <h2 style="margin:8px 0; color:#f8fafc;">₹{income:,.0f}</h2>
@@ -151,7 +189,7 @@ if menu == "Dashboard":
             padding:24px;
             border-radius:14px;
             border:1px solid #1e293b;
-            box-shadow:0 6px 16px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12);
         ">
             <p style="margin:0; color:#cbd5f5;">Expenses</p>
             <h2 style="margin:8px 0; color:#f8fafc;">₹{abs(expenses):,.0f}</h2>
@@ -163,7 +201,7 @@ if menu == "Dashboard":
             padding:24px;
             border-radius:14px;
             border:1px solid #1e293b;
-            box-shadow:0 6px 16px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12);
         ">
             <p style="margin:0; color:#cbd5f5;">Balance</p>
             <h2 style="margin:8px 0; color:#f8fafc;">₹{balance:,.0f}</h2>
