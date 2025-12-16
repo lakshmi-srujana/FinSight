@@ -226,11 +226,6 @@ if menu == "Dashboard":
     height=170
 )
 
-    st.markdown(
-    "<hr style='border:0; height:1px; background:#1e293b; margin:40px 0;'>",
-    unsafe_allow_html=True
-)
-
 
     # ---------- NUMPY INSIGHT ----------
     expense_values = df.loc[df["amount"] < 0, "amount"].values
@@ -273,11 +268,6 @@ if menu == "Dashboard":
             """,
             unsafe_allow_html=True
         )
-
-    st.markdown(
-    "<hr style='border:0; height:1px; background:#1e293b; margin:40px 0;'>",
-    unsafe_allow_html=True
-    )
 
 
     # ---------- DONUT CHART ----------
