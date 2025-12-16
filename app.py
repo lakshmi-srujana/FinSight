@@ -12,60 +12,52 @@ st.markdown(
     """
     <style>
     /* =======================
-       APP BACKGROUND & BASE
+       APP BACKGROUND
        ======================= */
     .stApp {
-        background-color: #f3f4f6;
+        background-color: #0f172a;
         font-family: 'Inter', 'Segoe UI', sans-serif;
-        color: #111827;
+        color: #e5e7eb;
     }
 
     /* =======================
-       SIDEBAR CONTAINER
+       SIDEBAR
        ======================= */
     section[data-testid="stSidebar"] {
-        background-color: #ffffff;
-        border-right: 1px solid #d1d5db;
+        background-color: #020617;
+        border-right: 1px solid #1e293b;
     }
 
-    /* =======================
-       SIDEBAR TEXT (SAFE)
-       ======================= */
+    /* Sidebar text */
     section[data-testid="stSidebar"] label,
     section[data-testid="stSidebar"] p,
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3,
     section[data-testid="stSidebar"] div[role="radiogroup"] * {
-        color: #0f172a !important;
-        font-weight: 500;
+        color: #e5e7eb !important;
     }
 
-    /* Sidebar title */
     section[data-testid="stSidebar"] h1 {
         font-weight: 700;
     }
 
     /* =======================
-       SELECT MONTH FIX (KEY)
+       SELECT MONTH (DARK)
        ======================= */
-
-    /* Selectbox container */
     section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
-        background-color: #111827 !important;
-        border: 1px solid #374151 !important;
+        background-color: #020617 !important;
+        border: 1px solid #334155 !important;
         border-radius: 8px;
     }
 
-    /* Selected month text */
     section[data-testid="stSidebar"] div[data-baseweb="select"] span {
-        color: #ffffff !important;
+        color: #e5e7eb !important;
         font-weight: 500;
     }
 
-    /* Dropdown arrow */
     section[data-testid="stSidebar"] svg {
-        fill: #ffffff !important;
+        fill: #e5e7eb !important;
     }
 
     /* =======================
@@ -74,41 +66,33 @@ st.markdown(
     h1 {
         font-size: 2.2rem;
         font-weight: 700;
-        color: #0f172a;
+        color: #f8fafc;
     }
 
     h2, h3 {
-        color: #0f172a;
+        color: #f8fafc;
         font-weight: 600;
+    }
+
+    /* =======================
+       CARDS & CONTAINERS
+       ======================= */
+    div[style*="background:#ffffff"] {
+        background-color: #020617 !important;
+        border: 1px solid #1e293b;
     }
 
     /* =======================
        PARAGRAPH TEXT
        ======================= */
     p {
-        color: #374151;
+        color: #cbd5f5;
         font-size: 0.95rem;
     }
-
-    /* ===== Card consistency & hover polish ===== */
-    .card,
-    div[style*="box-shadow"] {
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .card:hover,
-    div[style*="box-shadow"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-    }
-
     </style>
     """,
     unsafe_allow_html=True
 )
-
-
-
 
 # --------------------------------------------------
 # LOAD DATA (SAFE FOR CLOUD)
