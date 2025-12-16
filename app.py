@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 
 st.set_page_config(
     page_title="FinSight",
@@ -8,10 +9,19 @@ st.set_page_config(
 )
 
 # ---------- LOAD DATA ----------
-df = pd.read_csv("transactions.csv")
-df["date"] = pd.to_datetime(df["date"])
-df["month"] = df["date"].dt.strftime("%Y-%m")
+# ---------- SAFE CSV LOAD ----------
+if not os.path.exists("transactions.csv"):
+    df = pd.DataFrame(columns=["date", "category", "description", "amount"])
+    df.to_csv("transactions.csv", index=False)
+else:
+    df = pd.read_csv("transactions.csv")
 
+# ---------- DATE PROCESSING ----------
+if not df.empty:
+    df["date"] = pd.to_datetime(df["date"])
+    df["month"] = df["date"].dt.strftime("%Y-%m")
+else:
+    df["month"] = []
 
 # ---------- SIDEBAR ----------
 st.sidebar.title("💰 FinSight")
