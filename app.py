@@ -3,47 +3,45 @@ import pandas as pd
 import numpy as np
 import os
 import altair as alt
+import streamlit.components.v1 as components
 
+# --------------------------------------------------
+# PAGE CONFIG (must be first Streamlit call)
+# --------------------------------------------------
+st.set_page_config(
+    page_title="FinSight",
+    layout="wide"
+)
+
+# --------------------------------------------------
+# GLOBAL STYLES
+# --------------------------------------------------
 st.markdown(
     """
     <style>
-    /* App background */
     .stApp {
         background-color: #f6f7fb;
         font-family: 'Inter', 'Segoe UI', sans-serif;
         color: #1f2933;
     }
 
-    /* Sidebar */
     section[data-testid="stSidebar"] {
         background-color: #ffffff;
         border-right: 1px solid #e5e7eb;
     }
 
-    /* Headings */
     h1, h2, h3 {
         color: #111827;
         font-weight: 600;
-    }
-
-    /* Subtle divider */
-    hr {
-        border: none;
-        border-top: 1px solid #e5e7eb;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-
-st.set_page_config(
-    page_title="FinSight",
-    layout="wide"
-)
-
-# ---------- LOAD DATA ----------
-# ---------- SAFE CSV LOAD ----------
+# --------------------------------------------------
+# LOAD DATA (SAFE FOR CLOUD)
+# --------------------------------------------------
 if not os.path.exists("transactions.csv"):
     df = pd.DataFrame(columns=["date", "category", "description", "amount"])
     df.to_csv("transactions.csv", index=False)
@@ -54,89 +52,85 @@ else:
         engine="python"
     )
 
-
-# ---------- DATE PROCESSING ----------
 if not df.empty:
     df["date"] = pd.to_datetime(df["date"])
     df["month"] = df["date"].dt.strftime("%Y-%m")
 else:
     df["month"] = []
 
-# ---------- SIDEBAR ----------
+# --------------------------------------------------
+# SIDEBAR
+# --------------------------------------------------
 st.sidebar.title("💰 FinSight")
+
 menu = st.sidebar.radio(
     "Navigate",
     ["Dashboard", "Transactions"]
 )
-# ---------- MONTH SELECTOR ----------
+
 available_months = sorted(df["month"].unique())
-selected_month = st.sidebar.selectbox(
-    "Select Month",
-    available_months
+selected_month = (
+    st.sidebar.selectbox("Select Month", available_months)
+    if len(available_months) > 0
+    else None
 )
-filtered_df = df[df["month"] == selected_month]
 
+filtered_df = df[df["month"] == selected_month] if selected_month else df
 
-
-# ---------- MAIN ----------
+# --------------------------------------------------
+# MAIN
+# --------------------------------------------------
 st.title("FinSight Dashboard")
 
+# ==================================================
+# DASHBOARD
+# ==================================================
 if menu == "Dashboard":
+
     income = filtered_df[filtered_df["amount"] > 0]["amount"].sum()
     expenses = filtered_df[filtered_df["amount"] < 0]["amount"].sum()
-    balance = income - abs(expenses)
+    balance = income + expenses  # expenses already negative
 
-    st.markdown(
+    # ---------- METRIC CARDS ----------
+    components.html(
         f"""
-    <div style="display:flex; gap:20px; margin-bottom:20px;">
-        <div style="
-            flex:1;
-            background:#ffffff;
-            padding:20px;
-            border-radius:12px;
-            box-shadow:0 4px 10px rgba(0,0,0,0.05);
-        ">
-            <p style="color:#6b7280; margin:0;">Income</p>
-            <h2 style="margin:5px 0; color:#111827;">₹{income}</h2>
-        </div>
+        <div style="display:flex; gap:20px; margin-bottom:30px;">
+            <div style="flex:1; background:#ffffff; padding:24px;
+                        border-radius:14px;
+                        box-shadow:0 6px 16px rgba(0,0,0,0.06);">
+                <p style="color:#6b7280; margin:0;">Income</p>
+                <h2 style="margin:8px 0;">₹{income:,.0f}</h2>
+            </div>
 
-        <div style="
-            flex:1;
-            background:#ffffff;
-            padding:20px;
-            border-radius:12px;
-            box-shadow:0 4px 10px rgba(0,0,0,0.05);
-        ">
-            <p style="color:#6b7280; margin:0;">Expenses</p>
-            <h2 style="margin:5px 0; color:#111827;">₹{abs(expenses)}</h2>
-        </div>
+            <div style="flex:1; background:#ffffff; padding:24px;
+                        border-radius:14px;
+                        box-shadow:0 6px 16px rgba(0,0,0,0.06);">
+                <p style="color:#6b7280; margin:0;">Expenses</p>
+                <h2 style="margin:8px 0;">₹{abs(expenses):,.0f}</h2>
+            </div>
 
-        <div style="
-            flex:1;
-            background:#ffffff;
-            padding:20px;
-            border-radius:12px;
-            box-shadow:0 4px 10px rgba(0,0,0,0.05);
-        ">
-            <p style="color:#6b7280; margin:0;">Balance</p>
-            <h2 style="margin:5px 0; color:#111827;">₹{balance}</h2>
+            <div style="flex:1; background:#ffffff; padding:24px;
+                        border-radius:14px;
+                        box-shadow:0 6px 16px rgba(0,0,0,0.06);">
+                <p style="color:#6b7280; margin:0;">Balance</p>
+                <h2 style="margin:8px 0;">₹{balance:,.0f}</h2>
+            </div>
         </div>
-    </div>
-    """,
-        unsafe_allow_html=True
+        """,
+        height=160
     )
 
-    st.divider()
     # ---------- NUMPY INSIGHT ----------
     expense_values = df[df["amount"] < 0]["amount"].values
-
     if len(expense_values) > 0:
-        max_expense = np.min(expense_values)
-        st.info(f"📉 Highest single expense: ₹{abs(max_expense)}")
+        st.info(f"📉 Highest single expense: ₹{abs(np.min(expense_values)):,.0f}")
 
     st.subheader("Overview")
     st.write("Your financial summary based on recorded transactions.")
+
+    # ---------- SPENDING BY CATEGORY ----------
     st.subheader("Spending by Category")
+
     expense_df = filtered_df[filtered_df["amount"] < 0]
 
     if not expense_df.empty:
@@ -157,12 +151,12 @@ if menu == "Dashboard":
                 x=alt.X(
                     "category:N",
                     title="",
-                    axis=alt.Axis(labelColor="#374151", tickColor="#e5e7eb")
+                    axis=alt.Axis(labelColor="#374151")
                 ),
                 y=alt.Y(
                     "amount:Q",
                     title="Amount Spent",
-                    axis=alt.Axis(labelColor="#374151", gridColor="#e5e7eb")
+                    axis=alt.Axis(gridColor="#e5e7eb")
                 ),
                 tooltip=[
                     alt.Tooltip("category:N", title="Category"),
@@ -176,15 +170,15 @@ if menu == "Dashboard":
             .configure_view(strokeWidth=0)
         )
 
-
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("No expenses for this month")
+        st.info("No expenses for this month.")
 
-
-
-
+# ==================================================
+# TRANSACTIONS
+# ==================================================
 elif menu == "Transactions":
+
     st.subheader("Add New Transaction")
 
     with st.form("transaction_form"):
@@ -197,17 +191,14 @@ elif menu == "Transactions":
         amount = st.number_input("Amount (use negative for expenses)", value=0)
 
         submitted = st.form_submit_button("Add Transaction")
+
         if submitted:
-            new_row = {
+            new_df = pd.DataFrame([{
                 "date": date,
                 "category": category,
                 "description": description,
                 "amount": amount
-            }
-
-            new_df = pd.DataFrame([new_row])
-            # Ensure consistent column order
-            new_df = new_df[["date", "category", "description", "amount"]]
+            }])
 
             new_df.to_csv(
                 "transactions.csv",
@@ -217,12 +208,8 @@ elif menu == "Transactions":
                 lineterminator="\n"
             )
 
-
-            st.success("Transaction added successfully! 🔄")
+            st.success("Transaction added successfully!")
             st.rerun()
 
-
-
-    st.divider()
     st.subheader("All Transactions")
-    st.dataframe(df)
+    st.dataframe(df, use_container_width=True)
