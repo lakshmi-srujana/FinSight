@@ -1,36 +1,32 @@
 import streamlit as st
+import pandas as pd
 
 st.set_page_config(
     page_title="FinSight",
     layout="wide"
 )
 
+# ---------- LOAD DATA ----------
+df = pd.read_csv("transactions.csv")
+
 # ---------- SIDEBAR ----------
 st.sidebar.title("💰 FinSight")
 menu = st.sidebar.radio(
     "Navigate",
-    ["Dashboard", "Transactions", "Statistics"]
+    ["Dashboard", "Transactions"]
 )
 
-# ---------- MAIN AREA ----------
+# ---------- MAIN ----------
 st.title("FinSight Dashboard")
-st.caption("A simple Python-based finance tracker")
 
 if menu == "Dashboard":
-    col1, col2, col3 = st.columns(3)
+    income = df[df["amount"] > 0]["amount"].sum()
+    expenses = df[df["amount"] < 0]["amount"].sum()
 
-    col1.metric("Monthly Budget", "₹45,000")
-    col2.metric("Income", "₹52,000")
-    col3.metric("Expenses", "₹36,000")
-
-    st.divider()
-    st.subheader("Welcome 👋")
-    st.write("This is your dashboard overview.")
+    col1, col2 = st.columns(2)
+    col1.metric("Total Income", f"₹{income}")
+    col2.metric("Total Expenses", f"₹{abs(expenses)}")
 
 elif menu == "Transactions":
-    st.subheader("Transactions")
-    st.write("Transactions page coming soon 🚧")
-
-elif menu == "Statistics":
-    st.subheader("Statistics")
-    st.write("Statistics page coming soon 📊")
+    st.subheader("All Transactions")
+    st.dataframe(df)
