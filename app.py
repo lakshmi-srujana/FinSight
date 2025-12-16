@@ -227,21 +227,28 @@ if menu == "Dashboard":
 
         chart = (
             alt.Chart(chart_data)
-            .mark_bar(
-                color="#4f46e5",
-                cornerRadiusTopLeft=8,
-                cornerRadiusTopRight=8
-            )
+            .mark_arc(innerRadius=80)
             .encode(
-                x=alt.X("category:N", title=""),
-                y=alt.Y("amount:Q", title="Amount Spent"),
-                tooltip=["category", "amount"]
+                theta=alt.Theta("amount:Q", stack=True),
+                color=alt.Color(
+                    "category:N",
+                    scale=alt.Scale(scheme="tableau10"),
+                    legend=alt.Legend(title="Category")
+                ),
+                tooltip=[
+                    alt.Tooltip("category:N", title="Category"),
+                    alt.Tooltip("amount:Q", title="Amount", format=",.0f")
+                ]
             )
-            .properties(height=320, background="#ffffff")
-            .configure_view(strokeWidth=0)
+            .properties(
+                height=320,
+                background="#ffffff"
+            )
         )
 
         st.altair_chart(chart, use_container_width=True)
+
+
     else:
         st.info("No expenses for this month")
 
