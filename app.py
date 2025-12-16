@@ -87,11 +87,46 @@ if menu == "Dashboard":
     balance = income - abs(expenses)
 
 
-    col1, col2, col3 = st.columns(3)
+    st.markdown(
+    f"""
+    <div style="display:flex; gap:20px; margin-bottom:20px;">
+        <div style="
+            flex:1;
+            background:#ffffff;
+            padding:20px;
+            border-radius:12px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.05);
+        ">
+            <p style="color:#6b7280; margin:0;">Income</p>
+            <h2 style="margin:5px 0; color:#111827;">₹{income}</h2>
+        </div>
 
-    col1.metric("💼 Income", f"₹{income}")
-    col2.metric("💸 Expenses", f"₹{abs(expenses)}")
-    col3.metric("💰 Balance", f"₹{balance}")
+        <div style="
+            flex:1;
+            background:#ffffff;
+            padding:20px;
+            border-radius:12px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.05);
+        ">
+            <p style="color:#6b7280; margin:0;">Expenses</p>
+            <h2 style="margin:5px 0; color:#111827;">₹{abs(expenses)}</h2>
+        </div>
+
+        <div style="
+            flex:1;
+            background:#ffffff;
+            padding:20px;
+            border-radius:12px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.05);
+        ">
+            <p style="color:#6b7280; margin:0;">Balance</p>
+            <h2 style="margin:5px 0; color:#111827;">₹{balance}</h2>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
     st.divider()
         # ---------- NUMPY INSIGHT ----------
