@@ -260,7 +260,7 @@ if menu == "Dashboard":
                 border:1px solid #1e293b;
                 margin-bottom:20px;
             ">
-                🧠 Highest spending category this month:
+                 Highest spending category this month:
                 <strong>{top_category}</strong> (₹{top_amount:,.0f})
             </div>
             """,
