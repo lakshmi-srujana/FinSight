@@ -11,20 +11,66 @@ import streamlit.components.v1 as components
 st.markdown(
     """
     <style>
-    /* App background */
+    /* =======================
+       APP BACKGROUND & BASE
+       ======================= */
     .stApp {
         background-color: #f3f4f6;
         font-family: 'Inter', 'Segoe UI', sans-serif;
         color: #111827;
     }
 
-    /* Sidebar */
+    /* =======================
+       SIDEBAR CONTAINER
+       ======================= */
     section[data-testid="stSidebar"] {
         background-color: #ffffff;
         border-right: 1px solid #d1d5db;
     }
 
-    /* Headings */
+    /* =======================
+       SIDEBAR TEXT (SAFE)
+       ======================= */
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] div[role="radiogroup"] * {
+        color: #0f172a !important;
+        font-weight: 500;
+    }
+
+    /* Sidebar title */
+    section[data-testid="stSidebar"] h1 {
+        font-weight: 700;
+    }
+
+    /* =======================
+       SELECT MONTH FIX (KEY)
+       ======================= */
+
+    /* Selectbox container */
+    section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+        background-color: #111827 !important;
+        border: 1px solid #374151 !important;
+        border-radius: 8px;
+    }
+
+    /* Selected month text */
+    section[data-testid="stSidebar"] div[data-baseweb="select"] span {
+        color: #ffffff !important;
+        font-weight: 500;
+    }
+
+    /* Dropdown arrow */
+    section[data-testid="stSidebar"] svg {
+        fill: #ffffff !important;
+    }
+
+    /* =======================
+       HEADINGS
+       ======================= */
     h1 {
         font-size: 2.2rem;
         font-weight: 700;
@@ -36,41 +82,9 @@ st.markdown(
         font-weight: 600;
     }
 
-    /* Sidebar text */
-    section[data-testid="stSidebar"] * {
-        color: #0f172a !important;
-    }
-
-    /* Sidebar selectbox label */
-    section[data-testid="stSidebar"] label {
-        color: #0f172a !important;
-        font-weight: 500;
-    }
-
-
-    /* Sidebar title */
-    section[data-testid="stSidebar"] h1 {
-        color: #0f172a !important;
-        font-weight: 700;
-    }
-
-    /* Sidebar selectbox: selected value text */
-    section[data-testid="stSidebar"] div[data-baseweb="select"] span {
-        color: #ffffff !important;
-    }
-
-    /* Sidebar selectbox input background */
-    section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
-        background-color: #111827 !important;
-    }
-
-    /* Dropdown arrow */
-    section[data-testid="stSidebar"] svg {
-        fill: #ffffff !important;
-    }
-
-
-    /* Paragraph text */
+    /* =======================
+       PARAGRAPH TEXT
+       ======================= */
     p {
         color: #374151;
         font-size: 0.95rem;
@@ -79,6 +93,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 
 
