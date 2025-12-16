@@ -54,6 +54,22 @@ st.markdown(
         font-weight: 700;
     }
 
+    /* Sidebar selectbox: selected value text */
+    section[data-testid="stSidebar"] div[data-baseweb="select"] span {
+        color: #ffffff !important;
+    }
+
+    /* Sidebar selectbox input background */
+    section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+        background-color: #111827 !important;
+    }
+
+    /* Dropdown arrow */
+    section[data-testid="stSidebar"] svg {
+        fill: #ffffff !important;
+    }
+
+
     /* Paragraph text */
     p {
         color: #374151;
