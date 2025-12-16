@@ -90,8 +90,14 @@ else:
     df = pd.read_csv("transactions.csv", on_bad_lines="skip", engine="python")
 
 if not df.empty:
-    df["date"] = pd.to_datetime(df["date"])
+    # Robust date parsing (prevents crashes)
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+    # Drop rows with invalid dates
+    df = df.dropna(subset=["date"])
+
     df["month"] = df["date"].dt.strftime("%Y-%m")
+
 else:
     df["month"] = []
 
