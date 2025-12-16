@@ -8,46 +8,44 @@ import streamlit.components.v1 as components
 # --------------------------------------------------
 # PAGE CONFIG (must be first Streamlit call)
 # --------------------------------------------------
-st.set_page_config(
-    page_title="FinSight",
-    layout="wide"
-)
-
-# --------------------------------------------------
-# GLOBAL STYLES
-# --------------------------------------------------
 st.markdown(
     """
     <style>
+    /* App background */
     .stApp {
-        background-color: #f9fafb;
+        background-color: #f3f4f6;
         font-family: 'Inter', 'Segoe UI', sans-serif;
-        color: #1f2937;
+        color: #111827;
     }
 
+    /* Sidebar */
     section[data-testid="stSidebar"] {
         background-color: #ffffff;
-        border-right: 1px solid #e5e7eb;
+        border-right: 1px solid #d1d5db;
     }
 
+    /* Headings */
     h1 {
         font-size: 2.2rem;
         font-weight: 700;
-        color: #111827;
+        color: #0f172a;
     }
 
     h2, h3 {
-        color: #111827;
+        color: #0f172a;
         font-weight: 600;
     }
 
+    /* Paragraph text */
     p {
-        color: #6b7280;
+        color: #374151;
+        font-size: 0.95rem;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 
 # --------------------------------------------------
