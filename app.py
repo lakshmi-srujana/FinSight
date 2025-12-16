@@ -20,9 +20,9 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #f6f7fb;
+        background-color: #f9fafb;
         font-family: 'Inter', 'Segoe UI', sans-serif;
-        color: #1f2933;
+        color: #1f2937;
     }
 
     section[data-testid="stSidebar"] {
@@ -30,14 +30,25 @@ st.markdown(
         border-right: 1px solid #e5e7eb;
     }
 
-    h1, h2, h3 {
+    h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    h2, h3 {
         color: #111827;
         font-weight: 600;
+    }
+
+    p {
+        color: #6b7280;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # --------------------------------------------------
 # LOAD DATA (SAFE FOR CLOUD)
