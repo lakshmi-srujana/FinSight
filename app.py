@@ -3,6 +3,39 @@ import pandas as pd
 import numpy as np
 import os
 
+st.markdown(
+    """
+    <style>
+    /* App background */
+    .stApp {
+        background-color: #f6f7fb;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        color: #1f2933;
+    }
+
+    /* Sidebar */
+    section[data-testid="stSidebar"] {
+        background-color: #ffffff;
+        border-right: 1px solid #e5e7eb;
+    }
+
+    /* Headings */
+    h1, h2, h3 {
+        color: #111827;
+        font-weight: 600;
+    }
+
+    /* Subtle divider */
+    hr {
+        border: none;
+        border-top: 1px solid #e5e7eb;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 st.set_page_config(
     page_title="FinSight",
     layout="wide"
