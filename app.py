@@ -270,4 +270,23 @@ elif menu == "Transactions":
         file_name="finsight_transactions.csv",
         mime="text/csv"
     )
+    st.markdown("Delete a Transaction")
+
+    if not df.empty:
+        row_to_delete = st.number_input(
+            "Enter row index to delete (see table index)",
+            min_value=0,
+            max_value=len(df) - 1,
+            step=1
+        )
+
+        if st.button("Delete Transaction"):
+            updated_df = df.drop(index=row_to_delete).reset_index(drop=True)
+            updated_df.to_csv("transactions.csv", index=False)
+
+            st.success("Transaction deleted successfully.")
+            st.rerun()
+    else:
+        st.info("No transactions available to delete.")
+
 
