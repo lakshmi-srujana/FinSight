@@ -89,6 +89,19 @@ st.markdown(
         color: #374151;
         font-size: 0.95rem;
     }
+
+    /* ===== Card consistency & hover polish ===== */
+    .card,
+    div[style*="box-shadow"] {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover,
+    div[style*="box-shadow"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+
     </style>
     """,
     unsafe_allow_html=True
