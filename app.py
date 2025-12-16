@@ -156,7 +156,22 @@ filtered_df = df[df["month"] == selected_month] if selected_month else df
 # MAIN
 # --------------------------------------------------
 st.title("FinSight Dashboard")
-st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+st.markdown(
+    """
+    <div style="
+        position: absolute;
+        top: 120px;
+        right: 40px;
+        opacity: 0.05;
+        z-index: 0;
+        pointer-events: none;
+    ">
+        <img src="https://www.svgrepo.com/show/530440/chart-line.svg" width="220">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # ==================================================
 # DASHBOARD
@@ -215,12 +230,12 @@ if menu == "Dashboard":
     # ---------- NUMPY INSIGHT ----------
     expense_values = df.loc[df["amount"] < 0, "amount"].values
     if expense_values.size > 0:
-        st.info(f"📉 Highest single expense: ₹{abs(expense_values.min()):,.0f}")
+        st.info(f"Highest single expense: ₹{abs(expense_values.min()):,.0f}")
 
     st.markdown(
     """
     <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
-        <span style="font-size:1.4rem;">📊</span>
+        <span style="font-size:1.4rem;"></span>
         <h3 style="margin:0;">Overview</h3>
     </div>
     """,
