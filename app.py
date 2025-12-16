@@ -9,6 +9,9 @@ st.set_page_config(
 
 # ---------- LOAD DATA ----------
 df = pd.read_csv("transactions.csv")
+df["date"] = pd.to_datetime(df["date"])
+df["month"] = df["date"].dt.strftime("%Y-%m")
+
 
 # ---------- SIDEBAR ----------
 st.sidebar.title("💰 FinSight")
@@ -16,14 +19,24 @@ menu = st.sidebar.radio(
     "Navigate",
     ["Dashboard", "Transactions"]
 )
+# ---------- MONTH SELECTOR ----------
+available_months = sorted(df["month"].unique())
+selected_month = st.sidebar.selectbox(
+    "Select Month",
+    available_months
+)
+filtered_df = df[df["month"] == selected_month]
+
+
 
 # ---------- MAIN ----------
 st.title("FinSight Dashboard")
 
 if menu == "Dashboard":
-    income = df[df["amount"] > 0]["amount"].sum()
-    expenses = df[df["amount"] < 0]["amount"].sum()
+    income = filtered_df[filtered_df["amount"] > 0]["amount"].sum()
+    expenses = filtered_df[filtered_df["amount"] < 0]["amount"].sum()
     balance = income - abs(expenses)
+
 
     col1, col2, col3 = st.columns(3)
 
@@ -42,7 +55,7 @@ if menu == "Dashboard":
     st.subheader("Overview")
     st.write("Your financial summary based on recorded transactions.")
     st.subheader("Spending by Category")
-    expense_df = df[df["amount"] < 0]
+    expense_df = filtered_df[filtered_df["amount"] < 0]
     category_summary = (
         expense_df.groupby("category")["amount"]
         .sum()
@@ -50,6 +63,7 @@ if menu == "Dashboard":
     )
 
     st.bar_chart(category_summary)
+
 
 
 elif menu == "Transactions":
