@@ -50,7 +50,7 @@ st.markdown(
 
     /* Sidebar title */
     section[data-testid="stSidebar"] h1 {
-        color: #ffffff !important;
+        color: #0f172a !important;
         font-weight: 700;
     }
 
