@@ -262,3 +262,12 @@ elif menu == "Transactions":
 
     st.subheader("All Transactions")
     st.dataframe(df, use_container_width=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    st.download_button(
+        label="⬇ Download Transactions as CSV",
+        data=df.to_csv(index=False),
+        file_name="finsight_transactions.csv",
+        mime="text/csv"
+    )
+
