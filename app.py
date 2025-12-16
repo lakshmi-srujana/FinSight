@@ -123,27 +123,48 @@ if menu == "Dashboard":
 
     # ---------- METRIC CARDS ----------
     components.html(
-        f"""
-        <div style="display:flex; gap:20px; margin-bottom:30px;">
-            <div style="flex:1; padding:24px; border-radius:14px;
-                        box-shadow:0 6px 16px rgba(0,0,0,0.06);">
-                <p>Income</p>
-                <h2>₹{income:,.0f}</h2>
-            </div>
-            <div style="flex:1; padding:24px; border-radius:14px;
-                        box-shadow:0 6px 16px rgba(0,0,0,0.06);">
-                <p>Expenses</p>
-                <h2>₹{abs(expenses):,.0f}</h2>
-            </div>
-            <div style="flex:1; padding:24px; border-radius:14px;
-                        box-shadow:0 6px 16px rgba(0,0,0,0.06);">
-                <p>Balance</p>
-                <h2>₹{balance:,.0f}</h2>
-            </div>
+    f"""
+    <div style="display:flex; gap:20px; margin-bottom:30px;">
+        <div style="
+            flex:1;
+            background:#020617;
+            padding:24px;
+            border-radius:14px;
+            border:1px solid #1e293b;
+            box-shadow:0 6px 16px rgba(0,0,0,0.4);
+        ">
+            <p style="margin:0; color:#cbd5f5;">Income</p>
+            <h2 style="margin:8px 0; color:#f8fafc;">₹{income:,.0f}</h2>
         </div>
-        """,
-        height=160
-    )
+
+        <div style="
+            flex:1;
+            background:#020617;
+            padding:24px;
+            border-radius:14px;
+            border:1px solid #1e293b;
+            box-shadow:0 6px 16px rgba(0,0,0,0.4);
+        ">
+            <p style="margin:0; color:#cbd5f5;">Expenses</p>
+            <h2 style="margin:8px 0; color:#f8fafc;">₹{abs(expenses):,.0f}</h2>
+        </div>
+
+        <div style="
+            flex:1;
+            background:#020617;
+            padding:24px;
+            border-radius:14px;
+            border:1px solid #1e293b;
+            box-shadow:0 6px 16px rgba(0,0,0,0.4);
+        ">
+            <p style="margin:0; color:#cbd5f5;">Balance</p>
+            <h2 style="margin:8px 0; color:#f8fafc;">₹{balance:,.0f}</h2>
+        </div>
+    </div>
+    """,
+    height=170
+)
+
 
     # ---------- NUMPY INSIGHT ----------
     expense_values = df.loc[df["amount"] < 0, "amount"].values
