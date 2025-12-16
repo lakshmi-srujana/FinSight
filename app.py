@@ -139,6 +139,7 @@ filtered_df = df[df["month"] == selected_month] if selected_month else df
 # MAIN
 # --------------------------------------------------
 st.title("FinSight Dashboard")
+st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
 # ==================================================
 # DASHBOARD
