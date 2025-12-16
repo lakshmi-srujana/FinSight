@@ -289,4 +289,48 @@ elif menu == "Transactions":
     else:
         st.info("No transactions available to delete.")
 
+    st.markdown("Edit a Transaction")
+
+    if not df.empty:
+        row_to_edit = st.number_input(
+            "Enter row index to edit",
+            min_value=0,
+            max_value=len(df) - 1,
+            step=1,
+            key="edit_index"
+        )
+
+        selected_row = df.loc[row_to_edit]
+
+        with st.form("edit_transaction_form"):
+            edit_date = st.date_input("Date", pd.to_datetime(selected_row["date"]))
+            edit_category = st.selectbox(
+                "Category",
+                ["Income", "Food", "Transport", "Shopping", "Bills", "Other"],
+                index=["Income", "Food", "Transport", "Shopping", "Bills", "Other"].index(
+                    selected_row["category"]
+                )
+            )
+            edit_description = st.text_input(
+                "Description", selected_row["description"]
+            )
+            edit_amount = st.number_input(
+                "Amount", value=float(selected_row["amount"])
+            )
+
+            if st.form_submit_button("Update Transaction"):
+                df.loc[row_to_edit] = [
+                    edit_date,
+                    edit_category,
+                    edit_description,
+                    edit_amount
+                ]
+
+                df.to_csv("transactions.csv", index=False)
+
+                st.success("Transaction updated successfully.")
+                st.rerun()
+    else:
+        st.info("No transactions available to edit.")
+
 
