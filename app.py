@@ -119,7 +119,7 @@ else:
 # --------------------------------------------------
 # SIDEBAR
 # --------------------------------------------------
-st.sidebar.title("💰 FinSight")
+st.sidebar.title("FinSight")
 
 menu = st.sidebar.radio(
     "Navigate",
@@ -187,7 +187,20 @@ if menu == "Dashboard":
     st.subheader("Overview")
     st.write("Your financial summary based on recorded transactions.")
 
-    # ---------- SPENDING BY CATEGORY ----------
+ # ---------- SPENDING BY CATEGORY ----------
+    st.markdown(
+        """
+        <div style="
+            background:#ffffff;
+            padding:24px;
+            border-radius:16px;
+            box-shadow:0 6px 16px rgba(0,0,0,0.05);
+            margin-top:20px;
+        ">
+        """,
+        unsafe_allow_html=True
+    )
+
     st.subheader("Spending by Category")
 
     expense_df = filtered_df[filtered_df["amount"] < 0]
@@ -207,31 +220,19 @@ if menu == "Dashboard":
                 cornerRadiusTopRight=8
             )
             .encode(
-                x=alt.X(
-                    "category:N",
-                    title="",
-                    axis=alt.Axis(labelColor="#374151")
-                ),
-                y=alt.Y(
-                    "amount:Q",
-                    title="Amount Spent",
-                    axis=alt.Axis(gridColor="#e5e7eb")
-                ),
-                tooltip=[
-                    alt.Tooltip("category:N", title="Category"),
-                    alt.Tooltip("amount:Q", title="Amount", format=",.0f")
-                ]
+                x=alt.X("category:N", title=""),
+                y=alt.Y("amount:Q", title="Amount Spent"),
+                tooltip=["category", "amount"]
             )
-            .properties(
-                height=320,
-                background="#ffffff"
-            )
+            .properties(height=320, background="#ffffff")
             .configure_view(strokeWidth=0)
         )
 
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("No expenses for this month.")
+        st.info("No expenses for this month")
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ==================================================
 # TRANSACTIONS
