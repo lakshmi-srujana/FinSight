@@ -49,10 +49,10 @@ if not os.path.exists("transactions.csv"):
     df.to_csv("transactions.csv", index=False)
 else:
     df = pd.read_csv(
-    "transactions.csv",
-    on_bad_lines="skip",
-    engine="python"
-)
+        "transactions.csv",
+        on_bad_lines="skip",
+        engine="python"
+    )
 
 
 # ---------- DATE PROCESSING ----------
@@ -86,9 +86,8 @@ if menu == "Dashboard":
     expenses = filtered_df[filtered_df["amount"] < 0]["amount"].sum()
     balance = income - abs(expenses)
 
-
     st.markdown(
-    f"""
+        f"""
     <div style="display:flex; gap:20px; margin-bottom:20px;">
         <div style="
             flex:1;
@@ -124,12 +123,11 @@ if menu == "Dashboard":
         </div>
     </div>
     """,
-    unsafe_allow_html=True
-)
-
+        unsafe_allow_html=True
+    )
 
     st.divider()
-        # ---------- NUMPY INSIGHT ----------
+    # ---------- NUMPY INSIGHT ----------
     expense_values = df[df["amount"] < 0]["amount"].values
 
     if len(expense_values) > 0:
@@ -152,16 +150,32 @@ if menu == "Dashboard":
             alt.Chart(chart_data)
             .mark_bar(
                 color="#4f46e5",
-                cornerRadiusTopLeft=6,
-                cornerRadiusTopRight=6
+                cornerRadiusTopLeft=8,
+                cornerRadiusTopRight=8
             )
             .encode(
-                x=alt.X("category:N", title=""),
-                y=alt.Y("amount:Q", title="Amount Spent"),
-                tooltip=["category", "amount"]
+                x=alt.X(
+                    "category:N",
+                    title="",
+                    axis=alt.Axis(labelColor="#374151", tickColor="#e5e7eb")
+                ),
+                y=alt.Y(
+                    "amount:Q",
+                    title="Amount Spent",
+                    axis=alt.Axis(labelColor="#374151", gridColor="#e5e7eb")
+                ),
+                tooltip=[
+                    alt.Tooltip("category:N", title="Category"),
+                    alt.Tooltip("amount:Q", title="Amount", format=",.0f")
+                ]
             )
-            .properties(height=320)
+            .properties(
+                height=320,
+                background="#ffffff"
+            )
+            .configure_view(strokeWidth=0)
         )
+
 
         st.altair_chart(chart, use_container_width=True)
     else:
@@ -192,8 +206,7 @@ elif menu == "Transactions":
             }
 
             new_df = pd.DataFrame([new_row])
-
-# Ensure consistent column order
+            # Ensure consistent column order
             new_df = new_df[["date", "category", "description", "amount"]]
 
             new_df.to_csv(
