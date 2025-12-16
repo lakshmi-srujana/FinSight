@@ -217,8 +217,16 @@ if menu == "Dashboard":
     if expense_values.size > 0:
         st.info(f"📉 Highest single expense: ₹{abs(expense_values.min()):,.0f}")
 
-    st.subheader("Overview")
-    st.write("Your financial summary based on recorded transactions.")
+    st.markdown(
+    """
+    <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+        <span style="font-size:1.4rem;">📊</span>
+        <h3 style="margin:0;">Overview</h3>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
     # ---------- SMART INSIGHT ----------
     expense_df = filtered_df.loc[filtered_df["amount"] < 0].copy()
