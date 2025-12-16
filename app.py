@@ -250,6 +250,11 @@ elif menu == "Transactions":
         amount = st.number_input("Amount (use negative for expenses)", value=0)
 
         if st.form_submit_button("Add Transaction"):
+
+    # AUTO-CONVERT EXPENSES TO NEGATIVE
+            if category != "Income" and amount > 0:
+                amount = -amount
+
             pd.DataFrame([{
                 "date": date,
                 "category": category,
@@ -265,6 +270,7 @@ elif menu == "Transactions":
 
             st.success("Transaction added successfully!")
             st.rerun()
+
 
     st.subheader("All Transactions")
     st.dataframe(df, use_container_width=True)
